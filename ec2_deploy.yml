@@ -1,0 +1,15 @@
+--- #ansible-playbook ec2_deploy.yml --extra-vars="region=ap-south-1", --extra-vars="count=5"
+- name: Creates ec2 instances
+  hosts: localhost
+  vars_files:
+    - regions/{{ region }}.yml
+  tasks:
+    - name: Creates R1soft server
+      ec2:
+        key_name: "{{ key_name }}"
+        assign_public_ip: yes
+        instance_type: "{{ instance_type }}"
+        region: "{{ region }}"
+        image: "{{ image }}"
+        vpc_subnet_id: "{{ vpc_subnet_id }}"
+        count: "{{ count }}"
